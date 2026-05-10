@@ -1,11 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Article = require("./models/Article");
+require("dotenv").config();
+// const cors = require("cors");
 
 const app = express();
 
 // mongodb+srv://raufzaidany_db_user:<db_password>@cluster0.myvb93t.mongodb.net/?appName=Cluster0
-mongoose.connect("mongodb+srv://raufzaidany_db_user:raufzaidany_db@cluster0.myvb93t.mongodb.net/?appName=Cluster0")
+mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("connected succesfully");
     }).catch((error) => {
@@ -13,6 +15,9 @@ mongoose.connect("mongodb+srv://raufzaidany_db_user:raufzaidany_db@cluster0.myvb
     })
 
 app.use(express.json())
+// app.use(cors({
+//     origin: "http://localhost:5173"
+// }));
 
 const PORT = 8005;
 
@@ -60,7 +65,7 @@ app.delete("/post/:id", async (req, res) => {
     const { id } = req.params;
     const article = await Article.findByIdAndDelete(id);
     res.json({
-        message:"article is deleted successfully"
+        message: "article is deleted successfully"
     })
 })
 
