@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const connectDB = require("./db");
 const Article = require("./models/Article");
 require("dotenv").config();
 // const cors = require("cors");
@@ -7,13 +8,16 @@ require("dotenv").config();
 const app = express();
 
 // mongodb+srv://raufzaidany_db_user:<db_password>@cluster0.myvb93t.mongodb.net/?appName=Cluster0
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("connected succesfully");
-    }).catch((error) => {
-        console.log(error);
-    })
-
+// mongoose.connect(process.env.MONGO_URI)
+//     .then(() => {
+//         console.log("connected succesfully");
+//     }).catch((error) => {
+//         console.log(error);
+//     })
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 app.use(express.json())
 // app.use(cors({
 //     origin: "http://localhost:5173"
