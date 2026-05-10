@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const connectDB = require("./db");
 const Article = require("./models/Article");
 require("dotenv").config();
-// const cors = require("cors");
+const cors = require("cors");
 
 const app = express();
 
@@ -19,9 +19,9 @@ app.use(async (req, res, next) => {
   next();
 });
 app.use(express.json())
-// app.use(cors({
-//     origin: "http://localhost:5173"
-// }));
+app.use(cors({
+    origin: "*"
+}));
 
 const PORT = 8005;
 
